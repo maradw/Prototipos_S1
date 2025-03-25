@@ -5,7 +5,9 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
-public class Player2 : MonoBehaviour
+
+[RequireComponent(typeof(Rigidbody), typeof(BoxCollider))]
+public class Player2 : SingletonNotPersistent<Player2>
 {
     private float _horizontal;
     private float _vertical;
@@ -16,8 +18,8 @@ public class Player2 : MonoBehaviour
     public int length = 1;
     public int score = 0;
     public GameObject[] Limits;
-    public static  event Action OnDead;
-    public static event Action OnChaseApple;
+    public  event Action OnDead; 
+    public event Action OnChaseApple; 
 
 
     [SerializeField] GameObject bodyPrefab; 
@@ -26,19 +28,9 @@ public class Player2 : MonoBehaviour
     public int _basicDistance ;
     bool _isDead = false;
 
-    public static Player2 Instance { get; private set; }
     private void Awake()
     {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(this);
-        }
-        else
-        {
-            //
-            DontDestroyOnLoad(this.gameObject);
-        }
-
+        myRBD = GetComponent<Rigidbody>();
     }
     public void OnMovement(InputAction.CallbackContext move)
     {
@@ -76,12 +68,12 @@ public class Player2 : MonoBehaviour
     public void FixedUpdate()
     {
         Vector3 previousPosition = transform.position;
-        myRBD.velocity = new Vector3(_horizontal * velocity, _vertical * velocity);
+        myRBD.velocity = new Vector3(_horizontal * velocity, _vertical * velocity); //
         MoveBodyParts(previousPosition);
     }
     void CheckMovement()
     {
-
+        //
     }
     private void OnCollisionEnter(Collision collision)
     {

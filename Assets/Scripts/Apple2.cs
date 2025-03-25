@@ -9,18 +9,20 @@ public class Apple2 : MonoBehaviour
 
     void OnEnable()
     {
-        Player2.OnChaseApple += SetNewPosition;
+        Debug.Log(Player2.Instance);
+        Player2.Instance.OnChaseApple += SetNewPosition;
     }
     void OnDisable()
     {
-        Player2.OnChaseApple -= SetNewPosition;;
+        Player2.Instance.OnChaseApple -= SetNewPosition;;
     }
     public void SetNewPosition()
     {
-        position = new Vector3(UnityEngine.Random.Range(-5, 6), UnityEngine.Random.Range(-2.5f, 4.5f), 0);
-        transform.position =position;
+        Debug.Log("a");
+        position = new Vector3(Random.Range(-5, 6),Random.Range(-2.5f, 4.5f), 0);
+        //transform.position = position;
+        //Instantiate()
     }
-    // Start is called before the first frame update
     void Start()
     {
         
